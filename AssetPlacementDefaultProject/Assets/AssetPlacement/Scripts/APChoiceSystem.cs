@@ -21,11 +21,15 @@ public class APChoiceSystem : MonoBehaviour {
 	//Duplicated tab name data for ease of use only. Otherwise, use tabList
 	public List<string> tabNames = new List<string>();
 	
-	public APTabPlacementData selectedTab = null;
+	public int selectedTabIndex = 0;
+	public APTabPlacementData getSelectedTab() {
+		return tabList [selectedTabIndex];
+	}
+	
 	
 	private string folderName = APGlobals.AssetPath + "PlacementAssets";
 	private string FolderPath() { 		
-		return Application.dataPath + "\\" + folderName;
+		return Application.dataPath + "/" + folderName;
 	}
 	
 	private Dictionary<string, GameObject> tabContainerDictionary = new Dictionary<string, GameObject> (); 
@@ -58,7 +62,7 @@ public class APChoiceSystem : MonoBehaviour {
 				var filePaths = Directory.GetFiles (tabData.filePath);
 				foreach (string filePath in filePaths) {
 					var name = filePath.Remove (0, FolderPath ().Length + 1);
-					var localPath = "Assets\\" + filePath.Remove (0, FolderPath ().Length - folderName.Length);
+					var localPath = "Assets/" + filePath.Remove (0, FolderPath ().Length - folderName.Length);
 					
 					if (name.EndsWith (searchedExtension)) {
 						var assetData = new APData (localPath, name, tabData.name);
@@ -126,7 +130,7 @@ public class APChoiceSystem : MonoBehaviour {
 	void ByHotKeySelection () {
 		int index = 0;
 		foreach (APData data in assetList) {
-			if (selectedTab != null && data.tab == selectedTab.name) {
+			if (getSelectedTab() != null && data.tab == getSelectedTab().name) {
 				if (data.keyCode == (KeyCode)EditorPrefs.GetInt(APGlobals.SelectedKey)) {
 					selectedAsset = data;
 					
@@ -152,16 +156,17 @@ public class APChoiceSystem : MonoBehaviour {
 	}
 	
 	void RefreshSelectedTab () {
+		int index = 0;
 		foreach (var tabData in tabList) {
 			if (tabData.name == EditorPrefs.GetString (APGlobals.SelectedTab)) {
-				selectedTab = tabData;
+				selectedTabIndex = index;
 			}
+			index++;
 		}
 	}
 	
 	public void Refresh () {
 		if (shouldResetAssets) {
-			
 			shouldResetAssets = false;
 			
 			WipeData ();

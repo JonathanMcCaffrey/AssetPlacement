@@ -8,7 +8,7 @@ public class APSerializedHotKeys : EditorWindow {
 		if (hotkeyCode != KeyCode.None) {
 			int index = 0;
 			foreach (var assetData in APChoiceSystem.instance.assetList) {
-				if(APChoiceSystem.instance.selectedTab.name == assetData.tab) {
+				if(APChoiceSystem.instance.getSelectedTab().name == assetData.tab) {
 					if (assetData.keyCode == hotkeyCode) {
 						EditorPrefs.SetInt (APGlobals.SelectedAssetNumber, index);
 						EditorPrefs.SetInt (APGlobals.SelectedKey, (int)hotkeyCode);
@@ -30,22 +30,6 @@ public class APSerializedHotKeys : EditorWindow {
 		EditorPrefs.SetInt (APGlobals.SelectedKey, (int)KeyCode.Alpha1); 
 		EditorPrefs.SetInt (APGlobals.SelectedAssetNumber, APGlobals.HotKeySelectionEnabled);
 		RefreshSelectedKey(KeyCode.Alpha1);
-	}
-
-
-	[MenuItem( APGlobals.CommandPath + "Hot Keys/Alpha2 &_Alpha2")]
-	public static void SelectItemAlpha2() {
-		EditorPrefs.SetInt (APGlobals.SelectedKey, (int)KeyCode.Alpha2); 
-		EditorPrefs.SetInt (APGlobals.SelectedAssetNumber, APGlobals.HotKeySelectionEnabled);
-		RefreshSelectedKey(KeyCode.Alpha2);
-	}
-
-
-	[MenuItem( APGlobals.CommandPath + "Hot Keys/Alpha3 &_Alpha3")]
-	public static void SelectItemAlpha3() {
-		EditorPrefs.SetInt (APGlobals.SelectedKey, (int)KeyCode.Alpha3); 
-		EditorPrefs.SetInt (APGlobals.SelectedAssetNumber, APGlobals.HotKeySelectionEnabled);
-		RefreshSelectedKey(KeyCode.Alpha3);
 	}
 
 

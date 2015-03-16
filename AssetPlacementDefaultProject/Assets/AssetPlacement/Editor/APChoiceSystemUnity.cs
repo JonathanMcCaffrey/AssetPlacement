@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class APChoiceSystemUnity : Editor {	
 	SerializedProperty assetList = null;
 	SerializedProperty tabList = null;
-	SerializedProperty selectedTab = null;
+	SerializedProperty selectedTabIndex = null;
 	SerializedProperty shouldResetAssets = null;
 	SerializedProperty shouldResetHotKeys = null;
 	
@@ -18,7 +18,7 @@ public class APChoiceSystemUnity : Editor {
 		
 		EditorPrefs.SetInt (APGlobals.SelectedKey, (int)KeyCode.None);
 		
-		selectedTab = serializedObject.FindProperty ("selectedTab");
+		selectedTabIndex = serializedObject.FindProperty ("selectedTabIndex");
 		shouldResetAssets = serializedObject.FindProperty ("shouldResetAssets");
 		shouldResetHotKeys = serializedObject.FindProperty ("shouldResetHotKeys");
 	}
@@ -36,13 +36,7 @@ public class APChoiceSystemUnity : Editor {
 			selectedTabNumber = GUILayout.SelectionGrid (selectedTabNumber, extractedTabNameList.ToArray(), extractedTabNameList.Count);
 			serializedObject.ApplyModifiedProperties();
 			
-			selectedTab.serializedObject.Update ();
-			
-			selectedTab.FindPropertyRelative("name").stringValue = tabList.GetArrayElementAtIndex(selectedTabNumber).FindPropertyRelative("name").stringValue;
-			selectedTab.FindPropertyRelative("filePath").stringValue = tabList.GetArrayElementAtIndex(selectedTabNumber).FindPropertyRelative("filePath").stringValue;
-			selectedTab.FindPropertyRelative("number").intValue = tabList.GetArrayElementAtIndex(selectedTabNumber).FindPropertyRelative("number").intValue;
-			
-			selectedTab.serializedObject.ApplyModifiedProperties();
+			selectedTabIndex.intValue = selectedTabNumber;
 			
 			serializedObject.Update ();
 		}
@@ -54,7 +48,7 @@ public class APChoiceSystemUnity : Editor {
 		for (int index = 0; index < assetList.arraySize; index++) {
 			var tabName = assetList.GetArrayElementAtIndex (index).FindPropertyRelative("tab").stringValue;
 			
-			if(selectedTab != null && tabName == selectedTab.FindPropertyRelative("name").stringValue) {
+			if(index == selectedTabIndex.intValue) {
 				EditorGUILayout.BeginVertical ();
 				EditorGUILayout.PropertyField (assetList.GetArrayElementAtIndex (index), true);
 				
