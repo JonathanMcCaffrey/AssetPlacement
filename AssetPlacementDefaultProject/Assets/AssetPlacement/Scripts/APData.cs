@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -19,3 +21,5 @@ public class APData {
 		this.tab = tab;
 	}
 }
+
+#endif

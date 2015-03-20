@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEngine;
 using System.Collections;
 using UnityEditor;
@@ -43,3 +45,5 @@ public class APDataDrawer : PropertyDrawer {
 		EditorPrefs.SetInt (APGlobals.SavedHotkeyDisplayIndex + name.stringValue, keyCode.enumValueIndex);
 	}
 }
+
+#endif

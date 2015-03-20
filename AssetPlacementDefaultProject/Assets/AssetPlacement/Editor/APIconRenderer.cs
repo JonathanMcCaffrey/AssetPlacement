@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
@@ -234,3 +236,6 @@ public class APIconRenderer {
 		if (temp) EditorWindow.DestroyImmediate (temp);
 	}
 }
+
+
+#endif

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -200,7 +202,7 @@ public class APChoiceSystem : MonoBehaviour {
 		"\n\t\tif (hotkeyCode != KeyCode.None) {" +
 			"\n\t\t\tint index = 0;" +
 			"\n\t\t\tforeach (var assetData in APChoiceSystem.instance.assetList) {" +
-			"\n\t\t\t\tif(APChoiceSystem.instance.selectedTab.name == assetData.tab) {" +
+			"\n\t\t\t\tif(APChoiceSystem.instance.getSelectedTab().name == assetData.tab) {" +
 			"\n\t\t\t\t\tif (assetData.keyCode == hotkeyCode) {" +
 			"\n\t\t\t\t\t\tEditorPrefs.SetInt (APGlobals.SelectedAssetNumber, index);" +
 			"\n\t\t\t\t\t\tEditorPrefs.SetInt (APGlobals.SelectedKey, (int)hotkeyCode);" +
@@ -217,7 +219,7 @@ public class APChoiceSystem : MonoBehaviour {
 	
 	public void SaveAllHotKeys() {
 		var directoryPath = Application.dataPath + APGlobals.HotKeysPath;
-		string content = "//This code is generated dynamically. Don't edit here\n//Edit at APChoiceSystem.cs line: 195\nusing UnityEditor; \nusing UnityEngine; \n\npublic class APSerializedHotKeys : EditorWindow {";
+		string content = "#if UNITY_EDITOR\n//This code is generated dynamically. Don't edit here\n//Edit at APChoiceSystem.cs line: 195\nusing UnityEditor; \nusing UnityEngine; \n\npublic class APSerializedHotKeys : EditorWindow {";
 		
 		content += refreshSelectedKeyFunctionString;
 		
@@ -241,8 +243,10 @@ public class APChoiceSystem : MonoBehaviour {
 			}
 		}
 		
-		content += "\n}";
+		content += "\n} \n#endif";
 		
 		File.WriteAllText(directoryPath, content);
 	}
 }
+
+#endif

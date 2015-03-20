@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 
 using UnityEngine;
 using System.Collections;
@@ -40,6 +41,7 @@ public class APGlobals {
 	public const string LightSubRender3D = "AP.LightSubRender3D";
 	public const string LightSunRender3D = "AP.LightSunRender3D";
 	
-	public const int HotKeySelectionEnabled = -1;
-	
+	public const int HotKeySelectionEnabled = -1;	
 }
+
+#endif
