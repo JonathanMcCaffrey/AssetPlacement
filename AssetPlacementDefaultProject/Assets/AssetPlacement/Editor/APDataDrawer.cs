@@ -22,13 +22,24 @@ public class APDataDrawer : PropertyDrawer {
 			}
 		}
 		
-		string fixedLabel = name.stringValue.TrimEnd (".prefab".ToCharArray ());
+		string nameString = name.stringValue;
 		
+		string fixedLabel = "";
+		
+		if (nameString.Contains (".prefab")) {
+			fixedLabel = nameString.Remove (nameString.Length - ".prefab".Length, ".prefab".Length);
+		} else {
+			fixedLabel = nameString;
+		}
+
+		var stringList = fixedLabel.Split ('\\');
+		fixedLabel = stringList[stringList.Length - 1];
+
 		GUI.Label (new Rect (rect.x, rect.y, rect.width * 0.60f, rect.height), fixedLabel);
 		EditorGUI.PropertyField (new Rect(rect.width * 0.65f, rect.y, rect.width * 0.35f, rect.height), keyCode, GUIContent.none);
-
+		
 		EditorPrefs.SetString (APGlobals.SavedHotkeyDisplayName + name.stringValue, keyCode.enumDisplayNames[keyCode.enumValueIndex]);
-
+		
 		EditorPrefs.SetInt (APGlobals.SavedHotkeyDisplayIndex + name.stringValue, keyCode.enumValueIndex);
 	}
 }

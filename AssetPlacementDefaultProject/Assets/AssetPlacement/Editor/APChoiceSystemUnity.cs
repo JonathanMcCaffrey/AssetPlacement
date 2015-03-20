@@ -32,7 +32,6 @@ public class APChoiceSystemUnity : Editor {
 		int selectedTabNumber = EditorPrefs.GetInt (APGlobals.SelectedTab);
 		
 		if (extractedTabNameList.Count > 0) {
-			
 			selectedTabNumber = GUILayout.SelectionGrid (selectedTabNumber, extractedTabNameList.ToArray(), extractedTabNameList.Count);
 			serializedObject.ApplyModifiedProperties();
 			
@@ -86,4 +85,3 @@ public class APChoiceSystemUnity : Editor {
 		serializedObject.ApplyModifiedProperties ();
 	}
 }
-
