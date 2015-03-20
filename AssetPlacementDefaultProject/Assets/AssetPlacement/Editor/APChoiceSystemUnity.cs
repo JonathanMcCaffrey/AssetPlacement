@@ -13,6 +13,7 @@ public class APChoiceSystemUnity : Editor {
 	SerializedProperty selectedTabIndex = null;
 	SerializedProperty shouldResetAssets = null;
 	SerializedProperty shouldResetHotKeys = null;
+	List<string> extractedTabNameList;
 	
 	void OnEnable() {
 		assetList = serializedObject.FindProperty ("assetList");
@@ -20,13 +21,15 @@ public class APChoiceSystemUnity : Editor {
 		
 		EditorPrefs.SetInt (APGlobals.SelectedKey, (int)KeyCode.None);
 		
+		extractedTabNameList = new List<string> ();
+		
 		selectedTabIndex = serializedObject.FindProperty ("selectedTabIndex");
 		shouldResetAssets = serializedObject.FindProperty ("shouldResetAssets");
 		shouldResetHotKeys = serializedObject.FindProperty ("shouldResetHotKeys");
 	}
 	
 	void CreateTabSelection () {
-		List<string> extractedTabNameList = new List<string> ();
+		extractedTabNameList.Clear ();
 		for (int index = 0; index < tabList.arraySize; index++) {
 			extractedTabNameList.Add (tabList.GetArrayElementAtIndex (index).FindPropertyRelative("name").stringValue);
 		}
@@ -49,7 +52,11 @@ public class APChoiceSystemUnity : Editor {
 		for (int index = 0; index < assetList.arraySize; index++) {
 			var tabName = assetList.GetArrayElementAtIndex (index).FindPropertyRelative("tab").stringValue;
 			
-			if(index == selectedTabIndex.intValue) {
+			if(extractedTabNameList.Count < selectedTabIndex.intValue) {
+				return;
+			}
+			
+			if(tabName == extractedTabNameList[selectedTabIndex.intValue]) {
 				EditorGUILayout.BeginVertical ();
 				EditorGUILayout.PropertyField (assetList.GetArrayElementAtIndex (index), true);
 				
