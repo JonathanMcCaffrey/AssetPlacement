@@ -8,7 +8,7 @@ public class APGlobals {
 	public const string InstallPath = ""; 
 	
 	//Where 'your' assets are in Assets/
-	//And this assumes they are in a folder called AssetPlacement
+	//And this assumes they are in a folder called PlacementAssets
 	public const string AssetPath = "AssetPlacement/"; 
 	
 	
